@@ -1,11 +1,13 @@
-import { config } from "./config.js";
+//import { config } from "./config.js";
 import Discord from "discord.js";
 import {rollDice, initGame, playersReached, instructions} from './game_functions.js'
 //const Discord = require("discord.js");
 
 const client = new Discord.Client();
 
-const token = config.botToken;
+
+//let token = config.botToken;
+
 const initPlay = "Init FunDice";
 
 client.once("ready", () => {
@@ -63,5 +65,5 @@ client.on("message", (message) => {
 });
 
 
-
-client.login(token);
+//client.login(token);
+client.login(process.env.BOT_TOKEN);
