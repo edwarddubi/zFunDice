@@ -2,10 +2,11 @@
 Hello there, this is a discord dice game bot. Compete with other players and win the RNG crown.
 
 ## How to Play?
+ - Start game with **init funDice**
  - Players are required to join the game by typing **play**.
  - Each player will now roll a dice.
  - A player can get a number between 1-6.
- - Default rounds to be played **3**, so players would have to take turns until each round has been completed.
+ - Default rounds to be played, **3**, so players would have to take turns until each round has been completed.
  - The goal of the game is that the numbers rolled by each player during the game will be added and that will determine the winner at the end of the entire round.
  - Play away!! And test how good your RNG is...
 
