@@ -1,4 +1,4 @@
-//import { config } from "./config.js";
+import { config } from "./config.js";
 import Discord from "discord.js";
 import {rollDice, initGame, playersReached, instructions} from './game_functions.js'
 //const Discord = require("discord.js");
@@ -6,7 +6,7 @@ import {rollDice, initGame, playersReached, instructions} from './game_functions
 const client = new Discord.Client();
 
 
-//let token = config.botToken;
+let token = config.botToken;
 
 const initPlay = "Init FunDice";
 
@@ -16,6 +16,7 @@ client.once("ready", () => {
 let comps = {
   maxPlayers: 0,
   maxPlays : 3,
+  rounds : 1,
   awake : false,
   done : false,
   temp_players : [],
@@ -26,8 +27,25 @@ client.on("message", (message) => {
   comps["message"] = message;
   if (comps["awake"]) {
     if (message.content.toLowerCase().startsWith("play")) {
-     initGame(comps);
-    } else if (message.content.toLowerCase().startsWith("start")) {
+      initGame(comps); 
+     
+    } else if (message.content.toLowerCase().startsWith("start") && comps["players"].length > 0) {
+      let args = message.content.split(",");
+      let round_str = args[1];
+      if(!round_str){
+        round_str = "3";
+      }
+      try{
+        let count = parseInt(round_str);
+        if(count < 1){
+          count = 3;
+        }else{
+          comps["maxPlays"] = count;
+        }
+        
+      }catch(err){
+        comps["maxPlays"] = 3
+      }
       playersReached(comps)
     } else if (comps["done"] && message.content.toLowerCase().startsWith("rolldice")) {
       let res = rollDice(comps)
@@ -50,13 +68,14 @@ client.on("message", (message) => {
     comps = {
       maxPlayers: 0,
       maxPlays : 3,
+      rounds : 1,
       awake : false,
       done : false,
       temp_players : [],
       players : [],
       message : null,
     }
-    return message.channel.send("Awwww ;( Back to sleeping then. Lemme know whenever you wanna play with me.");
+    return message.channel.send("Aw! ;( Back to sleeping. Lemme know whenever you wanna play with me.");
   }
 
   //const args = message.content.slice(initPlay.length).split("#");
@@ -65,5 +84,5 @@ client.on("message", (message) => {
 });
 
 
-//client.login(token);
-client.login(process.env.BOT_TOKEN);
+client.login(token);
+//client.login(process.env.BOT_TOKEN);
